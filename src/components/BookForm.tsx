@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ExternalLink } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,8 +16,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { getBookText } from "@/services/gutenbergService";
 
-// Raw schema for validating the input as a string.
 const rawSchema = z.object({
   bookId: z
     .string()
@@ -25,13 +27,13 @@ const rawSchema = z.object({
     }),
 });
 
-// Transformed schema which converts the valid string to a number.
 const transformedSchema = rawSchema.transform(({ bookId }) => ({
   bookId: Number(bookId),
 }));
 
 export const BookForm = () => {
-  // Use the raw schema type so that defaultValues can be an empty string.
+  const [submittedBookId, setSubmittedBookId] = useState<number>(0);
+
   const form = useForm<z.infer<typeof rawSchema>>({
     resolver: zodResolver(rawSchema),
     defaultValues: {
@@ -39,10 +41,21 @@ export const BookForm = () => {
     },
   });
 
-  // onSubmit receives the transformed values (bookId as number)
   function onSubmit(values: z.infer<typeof transformedSchema>) {
     console.log(values);
+    setSubmittedBookId(values.bookId);
   }
+
+  const {
+    data: bookText,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["getBookText", submittedBookId],
+    queryFn: () => getBookText(submittedBookId),
+    enabled: submittedBookId !== 0,
+  });
+  console.log({ bookText, error, isLoading });
 
   return (
     <section>
