@@ -1,24 +1,29 @@
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { createGraphData } from "@/services/aiServices";
 
-import { groq } from "@/config/aiConfig";
-import { generateText } from "ai";
+export const Graph = ({ bookText }: { bookText: string }) => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["createGraphData", bookText.match(/Title:\s*(.{0,100})/)],
+    queryFn: async () => {
+      const graphData = await createGraphData(bookText);
+      if (!graphData.success) {
+        throw new Error(graphData.message);
+      }
+      const {
+        result: {
+          bokGraphData: { links, nodes },
+        },
+      } = graphData;
+      return { links, nodes };
+    },
+  });
 
-export const Graph = ({
-  //bookText,
-}: {
-  //bookText: ReadableStream<Uint8Array>;
-}) => {
-  //console.log({ bookText });
-  const callAi = async () => {
-    const { text } = await generateText({
-      model: groq("gemma2-9b-it"),
-      prompt: "Write a vegetarian lasagna recipe for 4 people.",
-    });
+  console.log({ data, error, isLoading });
 
-    console.log({ text });
-  };
-  useEffect(() => {
-    callAi();
-  }, []);
-  return <>Book Text</>;
+  return (
+    <>
+      {isLoading && <p>Creating graph data...</p>}
+      {error && <p className="text-destructive">Error creating graph</p>}
+    </>
+  );
 };
