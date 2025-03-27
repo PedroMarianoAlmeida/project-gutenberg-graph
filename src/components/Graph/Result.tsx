@@ -20,20 +20,20 @@ export const Result = ({ graphData }: { graphData: GraphData }) => {
       <ForceGraph2D
         graphData={graphData}
         enablePanInteraction={false}
-        linkColor={() => "#00BFFF"}
+        linkColor={() => "#d9eaef"}
         linkLabel={(link) => link.relation}
         nodeCanvasObject={(node, ctx, globalScale) => {
           const customNode = node as CustomNode;
           const label = customNode.id;
 
           const radius = characterImportance[customNode.id] ?? 5;
-          const fontSize = 12 / globalScale;
+          const fontSize = 15 / globalScale;
           ctx.font = `${fontSize}px Sans-Serif`;
 
           // Draw fixed red circle
           ctx.beginPath();
           ctx.arc(customNode.x, customNode.y, radius, 0, 2 * Math.PI, false);
-          ctx.fillStyle = "red";
+          ctx.fillStyle = "#aa873b";
           ctx.fill();
 
           // Draw white label
