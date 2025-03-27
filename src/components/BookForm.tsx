@@ -24,6 +24,9 @@ const rawSchema = z.object({
     .nonempty("Book ID is required")
     .refine((val) => !isNaN(Number(val)), {
       message: "Book ID must be a valid number",
+    })
+    .refine((val) => Number(val) !== 0, {
+      message: "Book ID must not be zero",
     }),
 });
 
@@ -62,10 +65,10 @@ export const BookForm = () => {
     },
     enabled: submittedBookId !== 0,
   });
-  console.log({ bookText, error, isLoading });
+  console.log({ bookText });
 
   return (
-    <section>
+    <section className="flex flex-col gap-5">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit((data) => {
@@ -73,7 +76,11 @@ export const BookForm = () => {
             if (result.success) {
               onSubmit(result.data);
             } else {
-              console.log(result.error);
+              result.error.issues.forEach((issue) => {
+                form.setError(issue.path[0] as "bookId", {
+                  message: issue.message,
+                });
+              });
             }
           })}
           className="space-y-8"
@@ -82,10 +89,15 @@ export const BookForm = () => {
             control={form.control}
             name="bookId"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Book ID</FormLabel>
+              <FormItem className="flex flex-col items-center">
+                <FormLabel className="mb-2">Book ID</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="47715" {...field} />
+                  <Input
+                    type="number"
+                    placeholder="47715"
+                    {...field}
+                    className="max-w-40"
+                  />
                 </FormControl>
                 <FormDescription className="flex gap-1 items-center justify-center">
                   <span>Book id from</span>
@@ -106,8 +118,14 @@ export const BookForm = () => {
           <Button type="submit">Generate Graph</Button>
         </form>
       </Form>
-      {isLoading && <p>"Fetching book data..."</p>}
-      {error && <p>Error fetching data: {error.message}</p>}
+
+      {isLoading && <p>Fetching book data...</p>}
+      {error && (
+        <p className="text-destructive">
+          <span className="font-bold">Error fetching data:</span>{" "}
+          {error.message}
+        </p>
+      )}
     </section>
   );
 };
