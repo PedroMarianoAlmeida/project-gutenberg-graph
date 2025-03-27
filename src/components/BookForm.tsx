@@ -52,7 +52,14 @@ export const BookForm = () => {
     isLoading,
   } = useQuery({
     queryKey: ["getBookText", submittedBookId],
-    queryFn: () => getBookText(submittedBookId),
+    queryFn: async () => {
+      const bookData = await getBookText(submittedBookId);
+      if (!bookData.success) {
+        throw new Error(bookData.message);
+      }
+      const { result } = bookData;
+      return result;
+    },
     enabled: submittedBookId !== 0,
   });
   console.log({ bookText, error, isLoading });
@@ -62,7 +69,6 @@ export const BookForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit((data) => {
-            // Transform raw data using the transformed schema.
             const result = transformedSchema.safeParse(data);
             if (result.success) {
               onSubmit(result.data);
@@ -97,9 +103,11 @@ export const BookForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Generate Graph</Button>
         </form>
       </Form>
+      {isLoading && <p>"Fetching book data..."</p>}
+      {error && <p>Error fetching data: {error.message}</p>}
     </section>
   );
 };
