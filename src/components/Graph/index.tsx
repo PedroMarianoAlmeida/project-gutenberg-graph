@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { createGraphData } from "@/services/aiServices";
-// import mockedData from "@/graphDataExample.json";
 import { Result } from "./Result";
 
 export const Graph = ({ bookText }: { bookText: string }) => {
