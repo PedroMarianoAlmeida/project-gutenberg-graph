@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { getBookText } from "@/services/gutenbergService";
+import { Graph } from "./Graph";
 
 const rawSchema = z.object({
   bookId: z
@@ -45,7 +46,6 @@ export const BookForm = () => {
   });
 
   function onSubmit(values: z.infer<typeof transformedSchema>) {
-    console.log(values);
     setSubmittedBookId(values.bookId);
   }
 
@@ -68,64 +68,68 @@ export const BookForm = () => {
   console.log({ bookText });
 
   return (
-    <section className="flex flex-col gap-5">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit((data) => {
-            const result = transformedSchema.safeParse(data);
-            if (result.success) {
-              onSubmit(result.data);
-            } else {
-              result.error.issues.forEach((issue) => {
-                form.setError(issue.path[0] as "bookId", {
-                  message: issue.message,
+    <>
+      <section className="flex flex-col gap-5">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit((data) => {
+              const result = transformedSchema.safeParse(data);
+              if (result.success) {
+                onSubmit(result.data);
+              } else {
+                result.error.issues.forEach((issue) => {
+                  form.setError(issue.path[0] as "bookId", {
+                    message: issue.message,
+                  });
                 });
-              });
-            }
-          })}
-          className="space-y-8"
-        >
-          <FormField
-            control={form.control}
-            name="bookId"
-            render={({ field }) => (
-              <FormItem className="flex flex-col items-center">
-                <FormLabel className="mb-2">Book ID</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    placeholder="47715"
-                    {...field}
-                    className="max-w-40"
-                  />
-                </FormControl>
-                <FormDescription className="flex gap-1 items-center justify-center">
-                  <span>Book id from</span>
-                  <a
-                    href="https://www.gutenberg.org/"
-                    className="hover:underline flex items-center gap-1 font-bold"
-                    target="__blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>Project Gutenberg</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Generate Graph</Button>
-        </form>
-      </Form>
+              }
+            })}
+            className="space-y-8"
+          >
+            <FormField
+              control={form.control}
+              name="bookId"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-center">
+                  <FormLabel className="mb-2">Book ID</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="47715"
+                      {...field}
+                      className="max-w-40"
+                    />
+                  </FormControl>
+                  <FormDescription className="flex gap-1 items-center justify-center">
+                    <span>Book id from</span>
+                    <a
+                      href="https://www.gutenberg.org/"
+                      className="hover:underline flex items-center gap-1 font-bold"
+                      target="__blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span>Project Gutenberg</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Generate Graph</Button>
+          </form>
+        </Form>
 
-      {isLoading && <p>Fetching book data...</p>}
-      {error && (
-        <p className="text-destructive">
-          <span className="font-bold">Error fetching data:</span>{" "}
-          {error.message}
-        </p>
-      )}
-    </section>
+        {isLoading && <p>Fetching book data...</p>}
+        {error && (
+          <p className="text-destructive">
+            <span className="font-bold">Error fetching data:</span>{" "}
+            {error.message}
+          </p>
+        )}
+      </section>
+
+      {bookText && <Graph bookText={bookText} />}
+    </>
   );
 };
