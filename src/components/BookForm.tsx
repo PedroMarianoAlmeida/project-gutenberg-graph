@@ -65,11 +65,10 @@ export const BookForm = () => {
     },
     enabled: submittedBookId !== 0,
   });
-  console.log({ bookText });
 
   return (
     <>
-      <section className="flex flex-col gap-5">
+      <section className="flex flex-col gap-5 mb-6">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit((data) => {
@@ -121,14 +120,8 @@ export const BookForm = () => {
         </Form>
 
         {isLoading && <p>Fetching book data...</p>}
-        {error && (
-          <p className="text-destructive">
-            <span className="font-bold">Error fetching data:</span>{" "}
-            {error.message}
-          </p>
-        )}
+        {error && <p className="text-destructive">Error fetching data</p>}
       </section>
-
       {bookText && <Graph bookText={bookText} />}
     </>
   );
