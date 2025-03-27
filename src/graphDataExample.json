@@ -1,0 +1,155 @@
+{
+  "links": [
+    {
+      "source": "United States",
+      "target": "King of Great Britain",
+      "relation": "opposition"
+    },
+    {
+      "source": "United Colonies",
+      "target": "British Crown",
+      "relation": "allegiance"
+    },
+    {
+      "source": "United States",
+      "target": "Divine Providence",
+      "relation": "friendship"
+    },
+    {
+      "source": "Colonists",
+      "target": "King James",
+      "relation": "loyalty"
+    },
+    {
+      "source": "Colonists",
+      "target": "God",
+      "relation": "alliance"
+    },
+    {
+      "source": "Americans",
+      "target": "tyranny",
+      "relation": "struggle"
+    },
+    {
+      "source": "Americans",
+      "target": "poverty",
+      "relation": "struggle"
+    },
+    {
+      "source": "Americans",
+      "target": "disease",
+      "relation": "struggle"
+    },
+    {
+      "source": "Americans",
+      "target": "war",
+      "relation": "struggle"
+    },
+    {
+      "source": "Patrick Henry",
+      "target": "House",
+      "relation": "patriotism"
+    },
+    {
+      "source": "Patrick Henry",
+      "target": "British ministry",
+      "relation": "opposition"
+    },
+    {
+      "source": "Senators and Representatives",
+      "target": "Constitution",
+      "relation": "loyalty"
+    },
+    {
+      "source": "President",
+      "target": "Constitution",
+      "relation": "loyalty"
+    },
+    {
+      "source": "Judges",
+      "target": "Constitution",
+      "relation": "loyalty"
+    },
+    {
+      "source": "People",
+      "target": "Constitution",
+      "relation": "loyalty"
+    },
+    {
+      "source": "Lincoln",
+      "target": "Union",
+      "relation": "loyalty"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "United States"
+    },
+    {
+      "id": "King of Great Britain"
+    },
+    {
+      "id": "United Colonies"
+    },
+    {
+      "id": "British Crown"
+    },
+    {
+      "id": "Divine Providence"
+    },
+    {
+      "id": "King James"
+    },
+    {
+      "id": "Colonists"
+    },
+    {
+      "id": "God"
+    },
+    {
+      "id": "Americans"
+    },
+    {
+      "id": "tyranny"
+    },
+    {
+      "id": "poverty"
+    },
+    {
+      "id": "disease"
+    },
+    {
+      "id": "war"
+    },
+    {
+      "id": "Patrick Henry"
+    },
+    {
+      "id": "House"
+    },
+    {
+      "id": "British ministry"
+    },
+    {
+      "id": "Senators and Representatives"
+    },
+    {
+      "id": "Constitution"
+    },
+    {
+      "id": "President"
+    },
+    {
+      "id": "Judges"
+    },
+    {
+      "id": "People"
+    },
+    {
+      "id": "Lincoln"
+    },
+    {
+      "id": "Union"
+    }
+  ]
+}
