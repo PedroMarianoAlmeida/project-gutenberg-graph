@@ -1,5 +1,9 @@
 import ForceGraph2D, { NodeObject } from "react-force-graph-2d";
-import mockedData from "@/graphDataExample.json";
+import { z } from "zod";
+
+//import mockedData from "@/graphDataExample.json";
+import { graphAiSchema } from "@/services/aiServices";
+
 
 type CustomNode = NodeObject & {
   id: string;
@@ -7,12 +11,13 @@ type CustomNode = NodeObject & {
   y: number;
   __bckgDimensions?: [number, number];
 };
+type GraphData = z.infer<typeof graphAiSchema>;
 
-export const Result = () => {
+export const Result = ({ graphData }: { graphData: GraphData }) => {
   return (
     <div className="flex justify-center items-center">
       <ForceGraph2D
-        graphData={mockedData}
+        graphData={graphData}
         enablePanInteraction={false}
         linkColor={() => "#00BFFF"}
         nodeCanvasObject={(node, ctx, globalScale) => {
