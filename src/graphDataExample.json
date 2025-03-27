@@ -82,28 +82,74 @@
     }
   ],
   "nodes": [
-    { "id": "United States", "importance": 28 },
-    { "id": "King of Great Britain", "importance": 19 },
-    { "id": "United Colonies", "importance": 27 },
-    { "id": "British Crown", "importance": 22 },
-    { "id": "Divine Providence", "importance": 16 },
-    { "id": "King James", "importance": 13 },
-    { "id": "Colonists", "importance": 21 },
-    { "id": "God", "importance": 25 },
-    { "id": "Americans", "importance": 18 },
-    { "id": "tyranny", "importance": 6 },
-    { "id": "poverty", "importance": 10 },
-    { "id": "disease", "importance": 9 },
-    { "id": "war", "importance": 17 },
-    { "id": "Patrick Henry", "importance": 20 },
-    { "id": "House", "importance": 11 },
-    { "id": "British ministry", "importance": 7 },
-    { "id": "Senators and Representatives", "importance": 30 },
-    { "id": "Constitution", "importance": 24 },
-    { "id": "President", "importance": 23 },
-    { "id": "Judges", "importance": 12 },
-    { "id": "People", "importance": 26 },
-    { "id": "Lincoln", "importance": 14 },
-    { "id": "Union", "importance": 15 }
+    {
+      "id": "United States"
+    },
+    {
+      "id": "King of Great Britain"
+    },
+    {
+      "id": "United Colonies"
+    },
+    {
+      "id": "British Crown"
+    },
+    {
+      "id": "Divine Providence"
+    },
+    {
+      "id": "King James"
+    },
+    {
+      "id": "Colonists"
+    },
+    {
+      "id": "God"
+    },
+    {
+      "id": "Americans"
+    },
+    {
+      "id": "tyranny"
+    },
+    {
+      "id": "poverty"
+    },
+    {
+      "id": "disease"
+    },
+    {
+      "id": "war"
+    },
+    {
+      "id": "Patrick Henry"
+    },
+    {
+      "id": "House"
+    },
+    {
+      "id": "British ministry"
+    },
+    {
+      "id": "Senators and Representatives"
+    },
+    {
+      "id": "Constitution"
+    },
+    {
+      "id": "President"
+    },
+    {
+      "id": "Judges"
+    },
+    {
+      "id": "People"
+    },
+    {
+      "id": "Lincoln"
+    },
+    {
+      "id": "Union"
+    }
   ]
 }
