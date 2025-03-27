@@ -1,13 +1,13 @@
 import { generateObject } from "ai";
 import { z } from "zod";
 
-import { groq } from "@/config/aiConfig";
+import { google } from "@/config/aiConfig";
 import { asyncWrapper } from "@/utils/asyncWrapper";
 
 export const createGraphData = async (bookText: string) => {
   return asyncWrapper(async () => {
     const res = await generateObject({
-      model: groq("gemma2-9b-it"),
+      model: google("gemini-2.0-flash-001"),
       schema: z
         .object({
           nodes: z.array(z.object({ id: z.string() })),
