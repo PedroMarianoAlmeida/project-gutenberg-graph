@@ -1,8 +1,8 @@
 import ForceGraph2D, { NodeObject } from "react-force-graph-2d";
 import { z } from "zod";
 
-//import mockedData from "@/graphDataExample.json";
 import { graphAiSchema } from "@/services/aiServices";
+import { calculateCharacterImportance } from "@/helpers/graphDataSanitize";
 
 type CustomNode = NodeObject & {
   id: string;
@@ -13,15 +13,8 @@ type CustomNode = NodeObject & {
 type GraphData = z.infer<typeof graphAiSchema>;
 
 export const Result = ({ graphData }: { graphData: GraphData }) => {
-  const characterImportance = graphData.nodes.reduce((acc, node) => {
-    const count = graphData.links.filter(
-      (link) => link.source === node.id || link.target === node.id
-    ).length;
-    acc[node.id] = count;
-    return acc;
-  }, {} as Record<string, number>);
-
-  console.log({ characterImportance });
+  const characterImportance = calculateCharacterImportance(graphData);
+  console.log({ graphData, characterImportance });
 
   return (
     <div className="flex justify-center items-center">
