@@ -1,10 +1,11 @@
 import { z } from "zod";
-
 import { graphAiSchema } from "@/services/aiServices";
 
 type GraphData = z.infer<typeof graphAiSchema>;
+
 export const calculateCharacterImportance = (graphData: GraphData) => {
-  const characterImportance = Object.fromEntries(
+  // Compute raw importance counts for all nodes.
+  const rawImportance = Object.fromEntries(
     graphData.nodes.map((node) => [node.id, 0])
   );
 
@@ -25,13 +26,32 @@ export const calculateCharacterImportance = (graphData: GraphData) => {
         ? (targetCandidate as { id: string }).id
         : link.target;
 
-    if (characterImportance.hasOwnProperty(sourceId)) {
-      characterImportance[sourceId]++;
+    if (rawImportance.hasOwnProperty(sourceId)) {
+      rawImportance[sourceId]++;
     }
-    if (characterImportance.hasOwnProperty(targetId)) {
-      characterImportance[targetId]++;
+    if (rawImportance.hasOwnProperty(targetId)) {
+      rawImportance[targetId]++;
     }
   });
 
-  return characterImportance;
+  // Create a new object for normalized importance.
+  const normalizedImportance: Record<string, number> = {};
+  const counts = Object.values(rawImportance);
+  const min = Math.min(...counts);
+  const max = Math.max(...counts);
+
+  if (min === max) {
+    // If all nodes have the same raw importance, assign the midpoint value (12.5).
+    for (const key in rawImportance) {
+      normalizedImportance[key] = 12.5;
+    }
+  } else {
+    for (const key in rawImportance) {
+      const value = rawImportance[key];
+      // Linear normalization: map raw value to range [5, 20]
+      normalizedImportance[key] = 5 + ((value - min) * 15) / (max - min);
+    }
+  }
+
+  return normalizedImportance;
 };

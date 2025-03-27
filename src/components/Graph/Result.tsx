@@ -14,7 +14,6 @@ type GraphData = z.infer<typeof graphAiSchema>;
 
 export const Result = ({ graphData }: { graphData: GraphData }) => {
   const characterImportance = calculateCharacterImportance(graphData);
-  console.log({ graphData, characterImportance });
 
   return (
     <div className="flex justify-center items-center">
@@ -27,7 +26,7 @@ export const Result = ({ graphData }: { graphData: GraphData }) => {
           const customNode = node as CustomNode;
           const label = customNode.id;
 
-          const radius = 30;
+          const radius = characterImportance[customNode.id] ?? 5;
           const fontSize = 12 / globalScale;
           ctx.font = `${fontSize}px Sans-Serif`;
 
