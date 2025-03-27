@@ -120,7 +120,13 @@ export const BookForm = () => {
         </Form>
 
         {isLoading && <p>Fetching book data...</p>}
-        {error && <p className="text-destructive">Error fetching data</p>}
+        {error && (
+          <p className="text-destructive">
+            {error.message === "Book not found"
+              ? "Book not found"
+              : "Error fetching data"}
+          </p>
+        )}
       </section>
       {bookText && <Graph bookText={bookText} />}
     </>
