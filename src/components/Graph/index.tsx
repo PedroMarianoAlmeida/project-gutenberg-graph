@@ -1,8 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { createGraphData } from "@/services/aiServices";
+// import mockedData from "@/graphDataExample.json";
+import { Result } from "./Result";
 
 export const Graph = ({ bookText }: { bookText: string }) => {
-  const { data, error, isLoading } = useQuery({
+  const {
+    data: graphData,
+    error,
+    isLoading,
+  } = useQuery({
     queryKey: ["createGraphData", bookText.match(/Title:\s*(.{0,100})/)],
     queryFn: async () => {
       const graphData = await createGraphData(bookText);
@@ -18,12 +24,11 @@ export const Graph = ({ bookText }: { bookText: string }) => {
     },
   });
 
-  console.log({ data, error, isLoading });
-
   return (
     <>
       {isLoading && <p>Creating graph data...</p>}
       {error && <p className="text-destructive">Error creating graph</p>}
+      {graphData && <Result graphData={graphData} />}
     </>
   );
 };
