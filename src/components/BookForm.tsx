@@ -128,8 +128,8 @@ export const BookForm = () => {
           </p>
         )}
       </section>
-
-      {bookText && <Graph bookText={bookText} />}
+      <Graph />
+      {/* {bookText && <Graph bookText={bookText} />} */}
     </>
   );
 };
